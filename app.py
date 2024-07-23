@@ -1,3 +1,7 @@
+# import flask/render_template
+# have index and view
+# host on 8080
+
 from flask import Flask, render_template
 
 app = Flask(__name__)

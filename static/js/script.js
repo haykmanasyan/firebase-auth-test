@@ -1,4 +1,5 @@
-// Your web app's Firebase configuration
+// Specific configuration
+// This will be copied from the dashboard during setup
 const firebaseConfig = {
   apiKey: "AIzaSyAwc0xzQpCRf8PSpWxGUOOygarMnZnZ8CY",
   authDomain: "test-9e968.firebaseapp.com",
@@ -16,17 +17,22 @@ const auth = firebase.auth();
 
 // Registration
 document.getElementById('register-form').addEventListener('submit', (e) => {
+  // Make sure that empty fields are not submitted
   e.preventDefault();
+
+  // Rip the email from the forms
   const email = document.getElementById('register-email').value;
   const password = document.getElementById('register-password').value;
 
   auth.createUserWithEmailAndPassword(email, password)
     .then((userCredential) => {
       // Registered successfully
+      // Update the message underneath
       const user = userCredential.user;
       document.getElementById('message').innerText = 'Registration successful!';
     })
     .catch((error) => {
+      // Catch the error and update the message
       const errorMessage = error.message;
       document.getElementById('message').innerText = `Error: ${errorMessage}`;
     });
@@ -38,9 +44,11 @@ document.getElementById('login-form').addEventListener('submit', (e) => {
   const email = document.getElementById('login-email').value;
   const password = document.getElementById('login-password').value;
 
+  // Similar idea here
   auth.signInWithEmailAndPassword(email, password)
     .then((userCredential) => {
       // Logged in successfully
+      // Update the html to go to view.html
       const user = userCredential.user;
       window.location.href = '/view';
     })
