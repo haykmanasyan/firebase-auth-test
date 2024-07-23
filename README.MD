@@ -1,6 +1,6 @@
 # Basic Authentication with Email and Password
 
-- Setup the project in the [Firebase console] (https://console.firebase.google.com)
+- Setup the project in the [Firebase console](https://console.firebase.google.com)
 - Copy the relevant setup code (this will go in the Javascript file)
 
 - Install the Firebase SDK:
