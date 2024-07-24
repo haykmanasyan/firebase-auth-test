@@ -19,3 +19,15 @@
 
 - Handle form submission within the Javascript file
 - Update the page/redirect, up to you
+
+# Google Authentication
+
+- Create a separate button for Google authentication
+- Do NOT re-initialize Firebase, there is no need
+
+- Javascript code under google.js:
+- Create a new instance of a provider: `const provider = new firebase.auth.GoogleAuthProvider();`
+
+- Double check that the current domain is under trusted domains
+    - localhost is already added
+    - I had to add 127.0.0.1

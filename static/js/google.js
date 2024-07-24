@@ -2,6 +2,7 @@
 document.getElementById('google-signin').addEventListener('click', () => {
   const provider = new firebase.auth.GoogleAuthProvider();
   
+  // signInWithPopup is what does all the work
   auth.signInWithPopup(provider)
     .then((result) => {
       const user = result.user;
