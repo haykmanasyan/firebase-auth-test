@@ -14,25 +14,27 @@ firebase.initializeApp(firebaseConfig);
 
 // Initialize Firebase Authentication and get a reference to the service
 const auth = firebase.auth();
+const db = firebase.firestore();
 
 // Registration
 document.getElementById('register-form').addEventListener('submit', (e) => {
-  // Make sure that empty fields are not submitted
   e.preventDefault();
-
-  // Rip the email from the forms
   const email = document.getElementById('register-email').value;
   const password = document.getElementById('register-password').value;
+  const userId = document.getElementById('register-id').value;
 
   auth.createUserWithEmailAndPassword(email, password)
     .then((userCredential) => {
-      // Registered successfully
-      // Update the message underneath
       const user = userCredential.user;
+      return db.collection('users').doc(user.uid).set({
+        email: email,
+        userId: userId
+      });
+    })
+    .then(() => {
       document.getElementById('message').innerText = 'Registration successful!';
     })
     .catch((error) => {
-      // Catch the error and update the message
       const errorMessage = error.message;
       document.getElementById('message').innerText = `Error: ${errorMessage}`;
     });
@@ -44,13 +46,20 @@ document.getElementById('login-form').addEventListener('submit', (e) => {
   const email = document.getElementById('login-email').value;
   const password = document.getElementById('login-password').value;
 
-  // Similar idea here
   auth.signInWithEmailAndPassword(email, password)
     .then((userCredential) => {
-      // Logged in successfully
-      // Update the html to go to view.html
       const user = userCredential.user;
-      window.location.href = '/view';
+      return db.collection('users').doc(user.uid).get();
+    })
+    .then((doc) => {
+      if (doc.exists) {
+        const userData = doc.data();
+        // Example: customize the behavior based on user ID
+        console.log('User ID:', userData.userId);
+        window.location.href = '/view';
+      } else {
+        document.getElementById('message').innerText = 'No such user!';
+      }
     })
     .catch((error) => {
       const errorMessage = error.message;
