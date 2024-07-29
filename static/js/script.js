@@ -1,5 +1,4 @@
 // Specific configuration
-// This will be copied from the dashboard during setup
 const firebaseConfig = {
   apiKey: "AIzaSyAwc0xzQpCRf8PSpWxGUOOygarMnZnZ8CY",
   authDomain: "test-9e968.firebaseapp.com",
@@ -14,25 +13,24 @@ firebase.initializeApp(firebaseConfig);
 
 // Initialize Firebase Authentication and get a reference to the service
 const auth = firebase.auth();
-const db = firebase.firestore();
 
 // Registration
 document.getElementById('register-form').addEventListener('submit', (e) => {
   e.preventDefault();
   const email = document.getElementById('register-email').value;
   const password = document.getElementById('register-password').value;
-  const userId = document.getElementById('register-id').value;
 
   auth.createUserWithEmailAndPassword(email, password)
     .then((userCredential) => {
       const user = userCredential.user;
-      return db.collection('users').doc(user.uid).set({
-        email: email,
-        userId: userId
-      });
-    })
-    .then(() => {
-      document.getElementById('message').innerText = 'Registration successful!';
+      user.sendEmailVerification()
+        .then(() => {
+          document.getElementById('message').innerText = 'Registration successful! A verification email has been sent to your email address.';
+        })
+        .catch((error) => {
+          const errorMessage = error.message;
+          document.getElementById('message').innerText = `Error: ${errorMessage}`;
+        });
     })
     .catch((error) => {
       const errorMessage = error.message;
@@ -49,16 +47,11 @@ document.getElementById('login-form').addEventListener('submit', (e) => {
   auth.signInWithEmailAndPassword(email, password)
     .then((userCredential) => {
       const user = userCredential.user;
-      return db.collection('users').doc(user.uid).get();
-    })
-    .then((doc) => {
-      if (doc.exists) {
-        const userData = doc.data();
-        // Example: customize the behavior based on user ID
-        console.log('User ID:', userData.userId);
+      if (user.emailVerified) {
         window.location.href = '/view';
       } else {
-        document.getElementById('message').innerText = 'No such user!';
+        document.getElementById('message').innerText = 'Please verify your email before logging in.';
+        auth.signOut();
       }
     })
     .catch((error) => {
