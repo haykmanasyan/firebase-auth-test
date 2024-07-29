@@ -26,6 +26,8 @@ auth.onAuthStateChanged(user => {
           if (doc.exists) {
               const userData = doc.data();
               const userId = userData.userId;
+              
+              // Check fetcjed ID
               console.log(`User ID retrieved from Firestore: ${userId}`);
 
               // Update the welcome message based on the user ID
@@ -39,6 +41,8 @@ auth.onAuthStateChanged(user => {
                   .then(response => response.json())
                   .then(data => {
                       if (data.url) {
+                        
+                        // Update the image container
                           const img = document.createElement('img');
                           img.src = data.url;
                           document.getElementById('image-container').appendChild(img);

@@ -38,12 +38,13 @@ def get_signed_url():
     # Get the first image in the folder
     first_image = None
     for blob in blobs:
-        if blob.name.endswith('.png'):  # Filter by image type, adjust as needed
+        if blob.name.endswith('.png'):
             first_image = blob.name
             break
 
     if first_image:
         blob = bucket.blob(first_image)
+        
         # Generate a signed URL for the blob
         url = blob.generate_signed_url(
             version='v4',

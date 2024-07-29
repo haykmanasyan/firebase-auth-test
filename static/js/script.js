@@ -51,6 +51,7 @@ document.getElementById('login-form').addEventListener('submit', (e) => {
   auth.signInWithEmailAndPassword(email, password)
     .then((userCredential) => {
       const user = userCredential.user;
+      // Check verification
       if (user.emailVerified) {
         return db.collection('users').doc(user.uid).get();
       } else {
@@ -61,6 +62,7 @@ document.getElementById('login-form').addEventListener('submit', (e) => {
       if (doc.exists) {
         const userData = doc.data();
         // Example: customize the behavior based on user ID
+        // Debugging
         console.log('User ID:', userData.userId);
         window.location.href = '/view';
       } else {
