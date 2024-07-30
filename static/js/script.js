@@ -1,4 +1,4 @@
-// Specific configuration
+// Firebase configuration
 const firebaseConfig = {
   apiKey: "AIzaSyAwc0xzQpCRf8PSpWxGUOOygarMnZnZ8CY",
   authDomain: "test-9e968.firebaseapp.com",
@@ -68,6 +68,21 @@ document.getElementById('login-form').addEventListener('submit', (e) => {
       } else {
         document.getElementById('message').innerText = 'No such user!';
       }
+    })
+    .catch((error) => {
+      const errorMessage = error.message;
+      document.getElementById('message').innerText = `Error: ${errorMessage}`;
+    });
+});
+
+// Password Reset
+document.getElementById('reset-form').addEventListener('submit', (e) => {
+  e.preventDefault();
+  const email = document.getElementById('reset-email').value;
+
+  auth.sendPasswordResetEmail(email)
+    .then(() => {
+      document.getElementById('message').innerText = 'Password reset email sent! Please check your email.';
     })
     .catch((error) => {
       const errorMessage = error.message;
