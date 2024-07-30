@@ -7,19 +7,23 @@ body {
     color: #343a40;
 }
 
+/* Title styling */
 h1 {
     text-align: center;
     margin-top: 20px;
 }
 
+/* General div styling */
 div {
     margin: 20px;
     padding: 20px;
     background-color: #ffffff;
     border-radius: 8px;
     box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+    box-sizing: border-box; /* Include padding and borders in element's width and height */
 }
 
+/* Form elements styling */
 input[type="email"],
 input[type="password"],
 input[type="text"],
@@ -29,6 +33,7 @@ button {
     margin: 10px 0;
     border: 1px solid #ced4da;
     border-radius: 4px;
+    box-sizing: border-box; /* Include padding and borders in element's width */
 }
 
 button {
@@ -49,15 +54,36 @@ button:hover {
     color: #dc3545;
 }
 
+/* Form container styles */
+.form-container {
+    display: flex;
+    justify-content: center;
+    align-items: stretch; /* Ensure all containers have the same height */
+    gap: 20px;
+    flex-wrap: wrap; /* Allows items to wrap on smaller screens */
+}
+
+.form-container > div {
+    flex: 1;
+    min-width: 350px; /* Increase minimum width of each form container */
+    max-width: 500px; /* Increase maximum width of each form container */
+    display: flex;
+    flex-direction: column;
+    align-items: stretch; /* Ensure the form contents stretch to the container's width */
+}
+
 /* Registration, Login, and Reset forms */
 #register, #login, #reset {
-    max-width: 400px;
-    margin: auto;
     padding: 20px;
 }
 
 /* Mobile styles */
 @media (max-width: 600px) {
+    .form-container {
+        flex-direction: column;
+        align-items: stretch; /* Ensures forms take full width */
+    }
+
     input[type="email"],
     input[type="password"],
     input[type="text"],
