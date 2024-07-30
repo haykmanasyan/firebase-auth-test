@@ -7,6 +7,9 @@ WORKDIR /app
 # Copy the current directory contents into the container
 COPY . .
 
+# Copy the Google Cloud credentials file into the container
+COPY enduring-broker-426815-b2-62d4e2cb97a2.json /app/enduring-broker-426815-b2-62d4e2cb97a2.json
+
 # Install any needed packages specified in requirements.txt
 RUN pip install --no-cache-dir -r requirements.txt
 
