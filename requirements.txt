@@ -1,0 +1,4 @@
+Flask==3.0.3
+Werkzeug==3.0.3
+google-cloud-storage==1.42.3
+flask-cors==3.0.10
